@@ -1,7 +1,8 @@
-import { defineAbility } from '@casl/ability';
+import defineAbility from './defineAbility';
 
-const ability = defineAbility((can) => {
-  can('read', 'Article');
-});
+const user = { name: 'Mateus' }
+const ability = defineAbility(user)
 
-const rule = ability.relevantRuleFor('read', 'Article'); // instance of internal `Rule` class
+console.log(ability.can('Generate File', 'ecdservice')) // true
+console.log(ability.can('List', 'documentservice')) // true
+console.log(ability.can('Create', 'documentservice')) // false
