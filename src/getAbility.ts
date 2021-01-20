@@ -1,5 +1,7 @@
 import { Ability } from '@casl/ability';
 
+// First Way
+
 export default new Ability([
     {
         action: '/fiscal/create',
