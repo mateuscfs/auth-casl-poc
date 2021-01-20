@@ -21,18 +21,20 @@ const methodToAction = new Map<string, string>([
     ['generate', 'execute'],
 ]);
 
-const resolveAction = createAliasResolver({
-    all: ['create', 'execute', 'update', 'delete', 'read', 'readAll' ],
+const aliasAction = createAliasResolver({
+    all: ['create', 'execute', 'update', 'delete', 'read', 'readAll'],
 });
 
 export function hasAbility(
     request: Record<string, string>,
     rules: Ability,
 ): boolean {
-    const urlAction = request.url.slice(request.url.lastIndexOf('/')+1);
+    const req = request.origin ? request.origin : request.url;
+    const urlAction = req.slice(req.lastIndexOf('/')+1);
     const action = methodToAction.get(urlAction);
-    const fields = replaceUrlToObjectNotation(request.url);
+    const fields = replaceUrlToObjectNotation(req);
     console.log(`action: ${action} -- permission : ${fields}`);
+
     return rules.can(action!, '', fields);
 }
 
@@ -72,7 +74,7 @@ export default new Ability(
         {
             action: 'all',
             subject: '',
-            fields: 'retail.**',
+            fields: 'retail.sangria.getAll',
         },
         {
             action: 'all',
@@ -80,5 +82,5 @@ export default new Ability(
             fields: 'dfe.doc.NFe.*'
         }
     ],
-    { resolveAction },
+    { resolveAction: aliasAction },
 );

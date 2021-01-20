@@ -26,18 +26,23 @@ const request5 = {
 };
 
 const request6 = {
-    url: 'dfe/doc/get',
+    url: 'retail/sangria/get',
 };
 
 const request7 = {
-    url: 'retail/sangria/send',
+    url: 'retail/sangria/get',
+    origin: 'fiscal/dfe/generate',
 };
 
 const request8 = {
-    url: 'dfe/doc/NFe/getAll',
+    url: 'retail/sangria/send',
 };
 
 const request9 = {
+    url: 'dfe/doc/NFe/getAll',
+};
+
+const request10 = {
     url: 'dfe/doc/NFe/emit',
 };
 
@@ -48,8 +53,9 @@ console.log(hasAbility(request4, rules)); // true
 console.log(hasAbility(request5, rules)); // false
 console.log(hasAbility(request6, rules)); // false
 console.log(hasAbility(request7, rules)); // true
-console.log(hasAbility(request8, rules)); // true
+console.log(hasAbility(request8, rules)); // false
 console.log(hasAbility(request9, rules)); // true
+console.log(hasAbility(request10, rules)); // true
 
 console.log('\nSecond Way');
 
@@ -60,9 +66,13 @@ const header = { module: 'Fiscal' };
 
 const testAbility = defineAbilities({ type: 'common' }, { module: 'Retail' });
 
+console.log('\nAbility 1');
+
 console.log(testAbility.can('Fiscal', '/ecdservice/file/generate')); // false
 console.log(testAbility.can('DFe', '/documentservice/NFe/getAll')); // false
 console.log(testAbility.can('DFe', '/documentservice/NFe/emit')); // true
+
+console.log('\nAbility 2');
 
 const testAbility2 = defineAbilities(user, header);
 
