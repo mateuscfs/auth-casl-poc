@@ -1,50 +1,71 @@
 import { defineAbilities } from './defineAbility';
-import rules from './getAbility';
+import rules, { hasAbility } from './getAbility';
 
 // First Way
 
+console.log('\n First Way');
+
 const request = {
-    url: '/fiscal/create',
-    module: 'fiscal',
+    url: 'fiscal/dfe/notas',
+    method: 'POST',
 };
 
 const request2 = {
-    url: '/fiscal/delete',
-    module: 'fiscal',
+    url: 'fiscal/dfe/notas',
+    method: 'GET',
 };
 
-
 const request3 = {
-    url: '/fiscal/execute',
-    module: 'fiscal/dfe',
+    url: 'fiscal/dfe/notas',
+    method: 'PUT',
 };
 
 const request4 = {
-    url: '/fiscal/create',
-    module: 'fiscal/dfe',
+    url: 'fiscal/dfe/notas',
+    method: 'DELETE',
 };
 
-console.log(rules.can(request.url, request.module)); // true
-console.log(rules.can(request2.url, request2.module)); // true
-console.log(rules.can(request3.url, request3.module)); // true
-console.log(rules.can(request4.url, request4.module)); // false
+const request5 = {
+    url: 'retail/sangria',
+    method: 'POST',
+};
 
-// Second Way
+const request6 = {
+    url: 'retail/sangria',
+    method: 'GET',
+};
+
+const request7 = {
+    url: 'retail/sangria/send',
+    method: 'GET',
+};
+
+console.log(hasAbility(request, rules));
+console.log(hasAbility(request2, rules));
+console.log(hasAbility(request3, rules));
+console.log(hasAbility(request4, rules));
+console.log(hasAbility(request5, rules));
+console.log(hasAbility(request6, rules));
+console.log(hasAbility(request7, rules));
+
+console.log('\nSecond Way');
+
+// // Second Way
 
 const user = { name: 'Mateus', type: 'admin' };
-const header = { module: 'Fiscal'}
+const header = { module: 'Fiscal' };
 
-const testAbility = defineAbilities({ type: 'common' }, { module: 'Retail' })
+const testAbility = defineAbilities({ type: 'common' }, { module: 'Retail' });
 
 console.log(testAbility.can('Fiscal', '/ecdservice/file/generate')); // false
 console.log(testAbility.can('DFe', '/documentservice/NFe/getAll')); // false
 console.log(testAbility.can('DFe', '/documentservice/NFe/emit')); // true
 
-const testAbility2 = defineAbilities(user, header)
+const testAbility2 = defineAbilities(user, header);
 
-console.log(testAbility2.can('Fiscal', '/ecdservice/file/generate')) // true
-console.log(testAbility2.can('DFe', '/documentservice/NFe/getAll')) // true
-console.log(testAbility2.can('DFe', '/documentservice/NFe/emit')) // true
-console.log(testAbility2.can('Retail', '/taxservice/NFe/get')) // false
-console.log(testAbility2.can('Fiscal', '/*')) // true
-console.log(testAbility2.can('Fiscal', '/ecdservice/*')) // false
+console.log(testAbility2.can('Fiscal', '/ecdservice/file/generate')); // true
+console.log(testAbility2.can('DFe', '/documentservice/NFe/getAll')); // true
+console.log(testAbility2.can('DFe', '/documentservice/NFe/emit')); // true
+console.log(testAbility2.can('Retail', '/taxservice/NFe/get')); // false
+console.log(testAbility2.can('Fiscal', '/*')); // true
+console.log(testAbility2.can('Fiscal', '/ecdservice/*')); // false
