@@ -6,47 +6,50 @@ import rules, { hasAbility } from './getAbility';
 console.log('\n First Way');
 
 const request = {
-    url: 'fiscal/dfe/notas',
-    method: 'POST',
+    url: 'fiscal/dfe/emit',
 };
 
 const request2 = {
-    url: 'fiscal/dfe/notas',
-    method: 'GET',
+    url: 'fiscal/dfe/register',
 };
 
 const request3 = {
-    url: 'fiscal/dfe/notas',
-    method: 'PUT',
+    url: 'fiscal/dfe/remove',
 };
 
 const request4 = {
-    url: 'fiscal/dfe/notas',
-    method: 'DELETE',
+    url: 'fiscal/dfe/generate',
 };
 
 const request5 = {
     url: 'retail/sangria',
-    method: 'POST',
 };
 
 const request6 = {
-    url: 'retail/sangria',
-    method: 'GET',
+    url: 'dfe/doc/get',
 };
 
 const request7 = {
     url: 'retail/sangria/send',
-    method: 'GET',
 };
 
-console.log(hasAbility(request, rules));
-console.log(hasAbility(request2, rules));
-console.log(hasAbility(request3, rules));
-console.log(hasAbility(request4, rules));
-console.log(hasAbility(request5, rules));
-console.log(hasAbility(request6, rules));
-console.log(hasAbility(request7, rules));
+const request8 = {
+    url: 'dfe/doc/NFe/getAll',
+};
+
+const request9 = {
+    url: 'dfe/doc/NFe/emit',
+};
+
+console.log(hasAbility(request, rules)); // true
+console.log(hasAbility(request2, rules)); // true
+console.log(hasAbility(request3, rules)); // true
+console.log(hasAbility(request4, rules)); // true
+console.log(hasAbility(request5, rules)); // false
+console.log(hasAbility(request6, rules)); // false
+console.log(hasAbility(request7, rules)); // true
+console.log(hasAbility(request8, rules)); // true
+console.log(hasAbility(request9, rules)); // true
 
 console.log('\nSecond Way');
 
