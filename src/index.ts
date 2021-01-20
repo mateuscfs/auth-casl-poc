@@ -36,15 +36,15 @@ const header = { module: 'Fiscal'}
 
 const testAbility = defineAbilities({ type: 'common' }, { module: 'Retail' })
 
-console.log(testAbility.can('Generate', 'fiscal.ecdservice.file')); // false
-console.log(testAbility.can('ReadAll', 'dfe.documentservice.NFe')); // false
-console.log(testAbility.can('Create', 'dfe.documentservice.NFe')); // true
+console.log(testAbility.can('Fiscal', '/ecdservice/file/generate')); // false
+console.log(testAbility.can('DFe', '/documentservice/NFe/getAll')); // false
+console.log(testAbility.can('DFe', '/documentservice/NFe/emit')); // true
 
 const testAbility2 = defineAbilities(user, header)
 
-console.log(testAbility2.can('Generate', 'fiscal.ecdservice.file')) // true
-console.log(testAbility2.can('ReadAll', 'dfe.documentservice.NFe')) // true
-console.log(testAbility2.can('Create', 'dfe.documentservice.NFe')) // true
-console.log(testAbility2.can('Read', 'retail.taxservice.NFe')) // false
-console.log(testAbility2.can('Generate', 'fiscal.*')) // true
-console.log(testAbility2.can('Generate', 'fiscal.ecdservice.*')) // false
+console.log(testAbility2.can('Fiscal', '/ecdservice/file/generate')) // true
+console.log(testAbility2.can('DFe', '/documentservice/NFe/getAll')) // true
+console.log(testAbility2.can('DFe', '/documentservice/NFe/emit')) // true
+console.log(testAbility2.can('Retail', '/taxservice/NFe/get')) // false
+console.log(testAbility2.can('Fiscal', '/*')) // true
+console.log(testAbility2.can('Fiscal', '/ecdservice/*')) // false
