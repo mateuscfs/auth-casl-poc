@@ -1,4 +1,5 @@
-import { defineAbilities } from './defineAbility';
+import { defineAbility } from '@casl/ability';
+import { defineAbilities, defineAbilitiesThirdWay } from './defineAbility';
 import rules from './getAbility';
 
 // First Way
@@ -34,17 +35,47 @@ console.log(rules.can(request4.url, request4.module)); // false
 const user = { name: 'Mateus', type: 'admin' };
 const header = { module: 'Fiscal'}
 
-const testAbility = defineAbilities({ type: 'common' }, { module: 'Retail' })
+const userAbility = defineAbilities({ type: 'common' }, { module: 'Retail' })
 
-console.log(testAbility.can('Fiscal', '/ecdservice/file/generate')); // false
-console.log(testAbility.can('DFe', '/documentservice/NFe/getAll')); // false
-console.log(testAbility.can('DFe', '/documentservice/NFe/emit')); // true
+console.log(userAbility.can('Fiscal', '/ecdservice/file/generate')); // false
+console.log(userAbility.can('DFe', '/documentservice/NFe/getAll')); // false
+console.log(userAbility.can('DFe', '/documentservice/NFe/emit')); // true
 
-const testAbility2 = defineAbilities(user, header)
+const userAbility2 = defineAbilities(user, header)
 
-console.log(testAbility2.can('Fiscal', '/ecdservice/file/generate')) // true
-console.log(testAbility2.can('DFe', '/documentservice/NFe/getAll')) // true
-console.log(testAbility2.can('DFe', '/documentservice/NFe/emit')) // true
-console.log(testAbility2.can('Retail', '/taxservice/NFe/get')) // false
-console.log(testAbility2.can('Fiscal', '/*')) // true
-console.log(testAbility2.can('Fiscal', '/ecdservice/*')) // false
+console.log(userAbility2.can('Fiscal', '/ecdservice/file/generate')) // true
+console.log(userAbility2.can('DFe', '/documentservice/NFe/getAll')) // true
+console.log(userAbility2.can('DFe', '/documentservice/NFe/emit')) // true
+console.log(userAbility2.can('Retail', '/taxservice/NFe/get')) // false
+console.log(userAbility2.can('Fiscal', '/*')) // true
+console.log(userAbility2.can('Fiscal', '/ecdservice')) // false
+
+// Third Way
+
+const userAbility3 = defineAbilitiesThirdWay({ type: 'common' }, { module: 'Retail' })
+
+console.log(userAbility3.can('Fiscal', '/ecdservice', '/file/generate')); // false
+console.log(userAbility3.can('Fiscal', '/ecdservice', '/file/teste')); // false
+console.log(userAbility3.can('DFe', '/documentservice', '/NFe/getAll')); // false
+console.log(userAbility3.can('DFe', '/documentservice', '/NFe/emit')); // true
+console.log(userAbility3.can('DFe', '/documentservice', '/CTe/emit')); // true
+console.log(userAbility3.can('DFe', '/documentservice', '/CTe')); // false
+
+const userAbility4 = defineAbilitiesThirdWay(user, { module: 'DFe' })
+
+console.log(userAbility4.can('Fiscal', '/ecdservice', '/file/generate')) // true
+console.log(userAbility4.can('Fiscal', '/ecdservice', '/file/teste')) // true
+console.log(userAbility4.can('Fiscal', '/ecdservice', '/file')) // false
+console.log(userAbility4.can('DFe', '/documentservice', '/CTe/getAll')); // true
+console.log(userAbility4.can('DFe', '/documentservice', '/CTe/teste')); // true
+console.log(userAbility4.can('DFe', '/documentservice', '/NFe/getAll')); // true
+console.log(userAbility4.can('DFe', '/documentservice', '/NFe/emit')); // true
+console.log(userAbility4.can('DFe', '/documentservice', '/MDFe/emit')); // true
+console.log(userAbility4.can('Common', '/generalservice', '/branch/get')); // true
+console.log(userAbility4.can('Common', '/generalservice', '/branch/teste')); // false
+console.log(userAbility4.can('Common', '/generalservice', '/branch/teste/get')); // true
+console.log(userAbility4.can('Common', '/generalservice', '/group/get')); // true
+console.log(userAbility4.can('Common', '/generalservice', '/group/teste/get')); // true
+console.log(userAbility4.can('Retail', '/taxservice', '/NFe/get')) // false
+console.log(userAbility4.can('Fiscal', '/*')) // false
+console.log(userAbility4.can('Fiscal', '/ecdservice', '/*')) // false
