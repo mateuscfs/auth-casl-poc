@@ -1,4 +1,3 @@
-import { defineAbility } from '@casl/ability';
 import { defineAbilities, defineAbilitiesThirdWay } from './defineAbility';
 import rules from './getAbility';
 
@@ -59,7 +58,7 @@ console.log(userAbility3.can('Fiscal', '/ecdservice', '/file/teste')); // false
 console.log(userAbility3.can('DFe', '/documentservice', '/NFe/getAll')); // false
 console.log(userAbility3.can('DFe', '/documentservice', '/NFe/emit')); // true
 console.log(userAbility3.can('DFe', '/documentservice', '/CTe/emit')); // true
-console.log(userAbility3.can('DFe', '/documentservice', '/CTe')); // false
+console.log(userAbility3.can('DFe', '/documentservice', '/MDFe/getAll')); // false
 
 const userAbility4 = defineAbilitiesThirdWay(user, { module: 'DFe' })
 

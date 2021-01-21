@@ -55,15 +55,3 @@ export const defineAbilitiesThirdWay = (user: Record<string, unknown>, header: R
         }
     })
 }
-
-// Actions
-
-/* 
-    Create
-    Update
-    Delete
-    Execute
-    Read
-    ReadAll
-    *
-*/
